@@ -2,3 +2,5 @@ pandas
 jupyter
 nbstripout
 streamlit
+mcp>=2.3,<3
+pytest
