@@ -2,6 +2,8 @@
 
 A personal finance tool that merges six years of transactions from four bank accounts into one database, categorises every transaction and shows monthly spending in a Streamlit dashboard.
 
+> **Includes an MCP server**: connect Claude (or any MCP client) to the database and ask questions about your spending in plain language, e.g. *"Why was October more expensive than September?"* See [`mcp_server/`](mcp_server/README.md).
+
 ## What it does
 
 **1. Clean each bank's export** (`notebooks/<bank>.ipynb`)
@@ -23,6 +25,9 @@ The cleaned per-bank parquet files are aligned to one schema and loaded into a s
 **4. Explore** (`app.py`)
 A Streamlit dashboard: pick a month, see spending per category and the total, and exclude categories (e.g. rent) to see the rest.
 
+**5. Ask** (`mcp_server/`)
+An MCP server with six read-only tools (spending per category, monthly trends, top merchants, transaction search, ...). An LLM client chooses which tools to call and answers in plain language.
+
 ## Run it
 
 Raw statements, processed data and mappings contain personal data, so they are git-ignored. To run it, put your own exports in `data/raw/<bank>/` and run the notebooks.
@@ -36,8 +41,9 @@ streamlit run app.py
 ## Next steps
 
 - [ ] **Frontend**: a proper web UI with charts and trends over time, replacing the basic Streamlit page
-- [ ] **AI agent**: ask questions about your spending in plain language (e.g. "Why was October more expensive than September?"), with the agent querying the database through tools
+- [x] **MCP server**: lets existing LLM clients (Claude Desktop, Claude Code) query the database through tools
+- [ ] **AI agent**: a built-in agent, using the same tools, that runs inside the app instead of an external client
 
 ## Stack
 
-Python · pandas · SQLite · Streamlit · Jupyter · LLM-assisted categorisation
+Python · pandas · SQLite · Streamlit · Jupyter · MCP · LLM-assisted categorisation
